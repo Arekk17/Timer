@@ -1,13 +1,20 @@
-import React from 'react';
-import TaskTimer from './Components/Timer/Timer';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Sidenav from './Components/Navigation/Sidenav';
+import TaskTimer from './Components/Timer/TaskTimer'
 
-
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <TaskTimer />
-    </div>
+    <Router>
+      <div className="flex">
+        <Sidenav />
+        <div className="flex-grow bg-gray-200">
+          <Routes>
+            {/* Dodaj swoje trasy tutaj */}
+            <Route path="/" element={<TaskTimer />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
   );
-}
-
-export default App;
+};
+export default App
