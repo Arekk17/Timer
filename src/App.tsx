@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Sidenav from './Components/Navigation/Sidenav';
-import TaskTimer from './Components/Timer/TaskTimer'
+import Sidenav from './Components/Navigation/SideNav';
+import TaskTimer from './Components/Timer/Timer';
 
 const App = () => {
   return (
