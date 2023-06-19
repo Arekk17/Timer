@@ -71,7 +71,7 @@ const TaskTimer: React.FC = () => {
           <button
             onClick={handleTimerToggle}
             className={`px-4 py-2 ${
-              isTimerRunning ? 'bg-red-500' : 'bg-blue-500'
+              isTimerRunning ? 'bg-red-500 hover:bg-red-700' : 'bg-blue-500'
             } text-white rounded hover:bg-blue-600`}
           >
             {isTimerRunning ? 'Zatrzymaj' : 'Rozpocznij'}
