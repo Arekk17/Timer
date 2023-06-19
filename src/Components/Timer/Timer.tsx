@@ -1,80 +1,113 @@
 import React, { useState, useEffect } from 'react';
+import { addData } from '../../MyServices/crudServices';
+import TimerInput from './TimerInput';
+import TimerDisplay from './TimerDisplay';
 
 const TaskTimer: React.FC = () => {
-  const [title, setTitle] = useState<string>('');
-  const [taskType, setTaskType] = useState<string>('');
-  const [time, setTime] = useState<number>(0);
-  const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
+  const [formData, setFormData] = useState({
+    title: '',
+    taskType: '',
+    time: 0,
+    isTimerRunning: false,
+    titleError: false,
+    taskTypeError: false,
+    startTime: '',
+    endTime: ''
+  });
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
-    if (isTimerRunning) {
+    if (formData.isTimerRunning) {
       timer = setInterval(() => {
-        setTime((prevTime) => prevTime + 1);
+        setFormData((prevData) => ({ ...prevData, time: prevData.time + 1 }));
       }, 1000);
     }
 
     return () => {
       clearInterval(timer);
     };
-  }, [isTimerRunning]);
+  }, [formData.isTimerRunning]);
 
-  const formatTime = (timeInSeconds: number) => {
-    const hours = Math.floor(timeInSeconds / 3600);
-    const minutes = Math.floor((timeInSeconds % 3600) / 60);
-    const seconds = timeInSeconds % 60;
-
-    return `${padNumber(hours)}:${padNumber(minutes)}:${padNumber(seconds)}`;
+  const handleTitleChange = (value: string) => {
+    setFormData((prevData) => ({ ...prevData, title: value }));
   };
 
-  const padNumber = (number: number) => {
-    return number.toString().padStart(2, '0');
+  const handleTaskTypeChange = (value: string) => {
+    setFormData((prevData) => ({ ...prevData, taskType: value }));
   };
 
   const handleTimerToggle = () => {
-    if (isTimerRunning) {
-      setIsTimerRunning(false);
-      setTime(0);
-    } else {
-      setIsTimerRunning(true);
+    const isTitleValid = validateField(formData.title, 'title');
+    const isTaskTypeValid = validateField(formData.taskType, 'taskType');
+
+    if (!isTitleValid || !isTaskTypeValid) {
+      return;
     }
+
+    if (formData.isTimerRunning) {
+      setFormData((prevData) => ({
+        ...prevData,
+        isTimerRunning: false,
+        time: 0,
+        endTime: new Date().toLocaleTimeString()
+      }));
+
+      const currentDate = new Date();
+      const dateString = currentDate.toLocaleDateString();
+
+      const data = {
+        taskName: formData.title,
+        taskType: formData.taskType,
+        taskTime: formData.time,
+        taskDate: dateString,
+        startTime: formData.startTime,
+        endTime: new Date().toLocaleTimeString()
+      };
+
+      addData(data);
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        isTimerRunning: true,
+        startTime: new Date().toLocaleTimeString()
+      }));
+    }
+  };
+
+  const validateField = (fieldValue: string, fieldName: string) => {
+    const isValid = fieldValue.trim() !== '';
+    setFormData((prevData) => ({
+      ...prevData,
+      [`${fieldName}Error`]: !isValid
+    }));
+    return isValid;
   };
 
   return (
     <div className="p-4 flex items-center border-b">
-      <label className="block mb-2 font-bold flex-grow" htmlFor="title">
-        Tytuł zadania:
-        <input
-          id="title"
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-32 sm:w-48 p-2 border border-gray-300 rounded ml-2"
-        />
-      </label>
-      <label className="block mb-2 font-bold flex-grow" htmlFor="taskType">
-        Rodzaj zadania:
-        <input
-          id="taskType"
-          type="text"
-          value={taskType}
-          onChange={(e) => setTaskType(e.target.value)}
-          className="w-32 sm:w-48 p-2 border border-gray-300 rounded ml-2"
-        />
-      </label>
+      <TimerInput
+        label="Tytuł zadania"
+        value={formData.title}
+        onChange={handleTitleChange}
+        error={formData.titleError}
+      />
+      <TimerInput
+        label="Rodzaj zadania"
+        value={formData.taskType}
+        onChange={handleTaskTypeChange}
+        error={formData.taskTypeError}
+      />
       <div className="flex items-center">
-        <div className="mr-3">
-          <p className="text-xl">Czas: {formatTime(time)}</p>
-        </div>
+        <TimerDisplay timeInSeconds={formData.time} />
         <div>
           <button
             onClick={handleTimerToggle}
             className={`px-4 py-2 ${
-              isTimerRunning ? 'bg-red-500 hover:bg-red-700' : 'bg-blue-500'
+              formData.isTimerRunning ? 'bg-red-500 hover:bg-red-700' : 'bg-blue-500'
             } text-white rounded hover:bg-blue-600`}
           >
-            {isTimerRunning ? 'Zatrzymaj' : 'Rozpocznij'}
+            {formData.isTimerRunning ? 'Zatrzymaj' : 'Rozpocznij'}
           </button>
         </div>
       </div>
