@@ -21,7 +21,7 @@ const Sidenav = () => {
               to="/graph"
               className="block py-2 px-4 rounded transition duration-200 hover:bg-gray-700"
             >
-              Graph
+              Raports
             </Link>
           </li>
         </ul>
