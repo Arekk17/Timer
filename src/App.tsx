@@ -13,7 +13,9 @@ const App = () => {
             {/* Dodaj swoje trasy tutaj */}
             <Route path="/" element={<TaskTimer />} />            
           </Routes>
-          <DataTable/>
+          <div className='w-100 p-2'>
+           <DataTable/>
+          </div>         
         </div>
         
       </div>
