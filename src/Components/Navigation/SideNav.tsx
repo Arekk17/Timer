@@ -6,7 +6,7 @@ const Sidenav = () => {
       <div className="py-4 px-6">
         <h2 className="text-2xl font-bold">TaskTimer</h2>
       </div>
-      <nav className="flex-grow">
+      <nav className="flex-grow h-screen">
         <ul className="space-y-2">
           <li>
             <Link

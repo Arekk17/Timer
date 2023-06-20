@@ -7,16 +7,14 @@ interface Data {
   taskTime: number;
 }
 
-export async function getData(){
+export async function getData() {
   const myCollection = collection(db, "tasks");
-  const myDocuments = await getDocs(myCollection);
+  const myDocuments = await getDocs(myCollection)
 
-  const result = myDocuments.docs.map((doc) => {
-    const { id, ...data } = doc.data();
-    return data;
-  });
-
-  return result;
+  const result = myDocuments.docs.map((doc) =>{
+    return {id: doc.id, ...doc.data()}
+  })
+  return result
 }
 
 export async function addData(data: Data) {
