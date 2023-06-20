@@ -14,6 +14,7 @@ const App = () => {
 
   useEffect(() => {
     handleDataRefresh();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
