@@ -6,7 +6,11 @@ export interface Record {
   [key: string]: any;
 }
 
-const DataTable: React.FC = () => {
+interface DataTableProps {
+  refreshData: boolean;
+}
+
+const DataTable: React.FC<DataTableProps> = ({ refreshData }) => {
   const [records, setRecords] = useState<Record[]>([]);
 
   useEffect(() => {
@@ -18,25 +22,22 @@ const DataTable: React.FC = () => {
         console.error('Error fetching data:', error);
       }
     }
-
     fetchData();
-  }, [records]);
+  }, [refreshData]);
 
   return (
     <>
-    <tr >
-      <th className='p-2 border-b-4 border-solid border-black'>Nazwa zadania</th>
-      <th className='p-2 border-b-4 border-solid border-black'>Czas</th>
-      <th className='p-2 border-b-4 border-solid border-black'>Rodzaj zadania</th>
-      <th className='p-2 border-b-4 border-solid border-black'>Godzina rozpoczecia</th>
-      <th className='p-2 border-b-4 border-solid border-black'>Godzina zakonczenia</th>
-    </tr>
+      <tr>
+        <th className='p-2 border-b-4 border-solid border-black'>Nazwa zadania</th>
+        <th className='p-2 border-b-4 border-solid border-black'>Czas</th>
+        <th className='p-2 border-b-4 border-solid border-black'>Rodzaj zadania</th>
+        <th className='p-2 border-b-4 border-solid border-black'>Godzina rozpoczęcia</th>
+        <th className='p-2 border-b-4 border-solid border-black'>Godzina zakończenia</th>
+      </tr>
       {records.map((record: Record, index: number) => {
         return (
           <tr key={index}>
-            <SingleRecord
-              record={record}            
-            />
+            <SingleRecord record={record} />
           </tr>
         );
       })}

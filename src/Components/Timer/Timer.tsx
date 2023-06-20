@@ -3,7 +3,11 @@ import { addData } from '../../MyServices/crudServices';
 import TimerInput from './TimerInput';
 import TimerDisplay from './TimerDisplay';
 
-const TaskTimer: React.FC = () => {
+interface TaskTimerProps {
+  handleDataRefresh: () => void;
+}
+
+const TaskTimer: React.FC<TaskTimerProps> = ({ handleDataRefresh }) => {
   const [formData, setFormData] = useState({
     title: '',
     taskType: '',
@@ -27,7 +31,7 @@ const TaskTimer: React.FC = () => {
     return () => {
       clearInterval(timer);
     };
-  }, [formData.isTimerRunning]);
+  }, [formData.isTimerRunning, handleDataRefresh]);
 
   const handleTitleChange = (value: string) => {
     setFormData((prevData) => ({ ...prevData, title: value }));
@@ -65,7 +69,13 @@ const TaskTimer: React.FC = () => {
         endTime: new Date().toLocaleTimeString()
       };
 
-      addData(data);
+      addData(data)
+        .then(() => {
+          handleDataRefresh();
+        })
+        .catch((error) => {
+          console.error('Error adding data:', error);
+        });
     } else {
       setFormData((prevData) => ({
         ...prevData,
