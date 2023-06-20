@@ -9,14 +9,14 @@ interface TimerInputProps {
 
 const TimerInput: React.FC<TimerInputProps> = ({ label, value, onChange, error }) => {
   return (
-    <label className="block mb-2 font-bold flex-grow" htmlFor={label}>
-      {label}:
+    <label className="block mb-2 font-bold sm:flex-grow" htmlFor={label}>
+      <span className="mb-1 sm:mb-0 sm:mr-2">{label}:</span>
       <input
         id={label}
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-32 sm:w-48 p-2 border border-gray-300 rounded ml-2"
+        className="w-full lg:max-w-xs p-2 border border-gray-300 rounded"
       />
       {error && <span className="text-red-500 text-sm">Uzupełnij pole {label}.</span>}
     </label>

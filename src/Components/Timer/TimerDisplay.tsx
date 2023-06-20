@@ -19,7 +19,7 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({ timeInSeconds }) => {
 
   return (
     <div className="mr-3">
-      <p className="text-xl">Czas: {formatTime(timeInSeconds)}</p>
+      <p className="text-lg sm:text-xl md:text-2xl">Czas: {formatTime(timeInSeconds)}</p>
     </div>
   );
 };

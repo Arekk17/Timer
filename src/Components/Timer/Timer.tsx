@@ -16,7 +16,7 @@ const TaskTimer: React.FC<TaskTimerProps> = ({ handleDataRefresh }) => {
     titleError: false,
     taskTypeError: false,
     startTime: '',
-    endTime: ''
+    endTime: '',
   });
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const TaskTimer: React.FC<TaskTimerProps> = ({ handleDataRefresh }) => {
         ...prevData,
         isTimerRunning: false,
         time: 0,
-        endTime: new Date().toLocaleTimeString()
+        endTime: new Date().toLocaleTimeString(),
       }));
 
       const currentDate = new Date();
@@ -66,7 +66,7 @@ const TaskTimer: React.FC<TaskTimerProps> = ({ handleDataRefresh }) => {
         taskTime: formData.time,
         taskDate: dateString,
         startTime: formData.startTime,
-        endTime: new Date().toLocaleTimeString()
+        endTime: new Date().toLocaleTimeString(),
       };
 
       addData(data)
@@ -80,7 +80,7 @@ const TaskTimer: React.FC<TaskTimerProps> = ({ handleDataRefresh }) => {
       setFormData((prevData) => ({
         ...prevData,
         isTimerRunning: true,
-        startTime: new Date().toLocaleTimeString()
+        startTime: new Date().toLocaleTimeString(),
       }));
     }
   };
@@ -89,26 +89,30 @@ const TaskTimer: React.FC<TaskTimerProps> = ({ handleDataRefresh }) => {
     const isValid = fieldValue.trim() !== '';
     setFormData((prevData) => ({
       ...prevData,
-      [`${fieldName}Error`]: !isValid
+      [`${fieldName}Error`]: !isValid,
     }));
     return isValid;
   };
 
   return (
-    <div className="p-4 flex items-center border-b">
-      <TimerInput
-        label="Tytuł zadania"
-        value={formData.title}
-        onChange={handleTitleChange}
-        error={formData.titleError}
-      />
-      <TimerInput
-        label="Rodzaj zadania"
-        value={formData.taskType}
-        onChange={handleTaskTypeChange}
-        error={formData.taskTypeError}
-      />
-      <div className="flex items-center">
+    <div className="p-4 flex flex-col md:flex-row md:items-center md:border-b">
+      <div className="md:flex-1">
+        <TimerInput
+          label="Tytuł zadania"
+          value={formData.title}
+          onChange={handleTitleChange}
+          error={formData.titleError}
+        />
+      </div>
+      <div className="md:flex-1">
+        <TimerInput
+          label="Rodzaj zadania"
+          value={formData.taskType}
+          onChange={handleTaskTypeChange}
+          error={formData.taskTypeError}
+        />
+      </div>
+      <div className="flex items-center mt-4 md:mt-0">
         <TimerDisplay timeInSeconds={formData.time} />
         <div>
           <button
