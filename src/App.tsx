@@ -21,7 +21,7 @@ const App = () => {
     <Router>
       <div className="flex flex-col md:flex-row">
         <Sidenav />
-        <div className="flex-grow bg-gray-200 md:h-screen">
+        <div className="flex-grow bg-gray-200 pb-10">
           <Routes>
             {/* Dodaj swoje trasy tutaj */}
             <Route path="/" element={<TaskTimer handleDataRefresh={handleDataRefresh} />} />

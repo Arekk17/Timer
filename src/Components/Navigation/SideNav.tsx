@@ -9,7 +9,7 @@ const Sidenav = () => {
   };
 
   return (
-    <div className="flex flex-col justify-between bg-gray-800 text-white h-100px md:w-64 md:h-screen">
+    <div className="flex flex-col justify-between bg-gray-800 text-white h-100px md:w-64">
       <div className="py-4 px-6 flex justify-between items-center">
         <h2 className="text-2xl font-bold">TaskTimer</h2>
         <button
