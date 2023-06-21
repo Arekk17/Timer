@@ -42,9 +42,9 @@ const ChartComponent: React.FC = () => {
   };
 
   return (
-    <div className="w-full">
-      <div className="overflow-x-auto">
-      <BarChart width={800}height={400} data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+    <div className="w-full flex justify-center">
+      <div className="overflow-x-auto mt-8">
+      <BarChart width={900}height={400} data={chartData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="taskType" />
           <YAxis />
