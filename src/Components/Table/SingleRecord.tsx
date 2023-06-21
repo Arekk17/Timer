@@ -1,38 +1,17 @@
 import React from 'react';
 import { Record } from './DataTable';
+
 interface SingleRecordProps {
   record: Record;
 }
 
 const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
-  const category = () => {
-    switch (record.taskType) {
-      case 'sport':
-        return (
-          <div className="p-3 flex-grow bg-red-600">{record.taskType}</div>
-        );
-      case 'praca':
-        return (
-          <div className="p-3 flex-grow bg-blue-600">{record.taskType}</div>
-        );
-      case 'czytanie':
-        return (
-          <div className="p-3 flex-grow bg-green-600">{record.taskType}</div>
-        );
-      default:
-        return (
-          <div className="p-3 flex-grow bg-white-600">{record.taskType}</div>
-        );
-    }
-  };
-
   const time = (taskTime: any) => {
-    const totalMinutes = Math.floor(taskTime / 60);    
+    const totalMinutes = Math.floor(taskTime / 60);
     const seconds = taskTime % 60;
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
 
-   
     return `${padNumber(hours)}:${padNumber(minutes)}:${padNumber(seconds)}`;
   };
 
@@ -40,14 +19,30 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
     return number.toString().padStart(2, '0');
   };
 
-  console.log(time(record.taskTime));
+  const getCategoryColor = (category: string) => {
+    let hash = 0;
+    for (let i = 0; i < category.length; i++) {
+      hash = category.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    // Convert the hash code to a color
+    const color = (hash & 0x00ffffff).toString(16).toUpperCase();
+    return `#${'00000'.substring(0, 6 - color.length)}${color}`;
+  };
+
+  const categoryBackgroundColor = {
+    backgroundColor: getCategoryColor(record.taskType),
+  };
+
   return (
-    <div className="flex bg-gray-200 rounded-md shadow-md mb-2">
-      <div className="p-3 flex-grow">{record.taskName}</div>
-      <div className="p-3 flex-grow">{time(record.taskTime)}</div>
-      {category()}
-      <div className="p-3 flex-grow">{record.startTime}</div>
-      <div className="p-3 flex-grow">{record.endTime}</div>
+    <div className="flex rounded-md shadow-md mb-2">
+      <div className="p-3 flex-grow w-1">{record.taskName}</div>
+      <div className="p-3 flex-grow w-1">{time(record.taskTime)}</div>
+      <div className="p-3 flex-grow w-1" style={categoryBackgroundColor}>
+        {record.taskType}
+      </div>
+      <div className="p-3 flex-grow w-1">{record.startTime}</div>
+      <div className="p-3 flex-grow w-1">{record.endTime}</div>
     </div>
   );
 };

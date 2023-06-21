@@ -19,7 +19,7 @@ const App = () => {
 
   return (
     <Router>
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row scroll-smooth">
         <Sidenav />
         <div className="flex-grow bg-gray-200 pb-10">
           <Routes>
