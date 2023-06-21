@@ -21,14 +21,14 @@ const App = () => {
     <Router>
       <div className="flex flex-col md:flex-row">
         <Sidenav />
-        <div className="flex-grow bg-gray-200">
+        <div className="flex-grow bg-gray-200 md:h-screen">
           <Routes>
             {/* Dodaj swoje trasy tutaj */}
             <Route path="/" element={<TaskTimer handleDataRefresh={handleDataRefresh} />} />
             <Route path="/graph" element={<ChartComponent />} />
           </Routes>
 
-          <div className="w-full md:w-3/4 lg:w-4/5 p-2 mx-auto">
+          <div className="w-full md:w-3/4 lg:w-4/5 p-2 mx-auto h-screen overflow-hidden">
             <DataTable refreshData={refreshData} />
           </div>
         </div>

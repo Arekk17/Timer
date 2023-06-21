@@ -26,22 +26,27 @@ const DataTable: React.FC<DataTableProps> = ({ refreshData }) => {
   }, [refreshData]);
 
   return (
-    <>
-      <tr>
-        <th className='p-2 border-b-4 border-solid border-black'>Nazwa zadania</th>
-        <th className='p-2 border-b-4 border-solid border-black'>Czas</th>
-        <th className='p-2 border-b-4 border-solid border-black'>Rodzaj zadania</th>
-        <th className='p-2 border-b-4 border-solid border-black'>Godzina rozpoczęcia</th>
-        <th className='p-2 border-b-4 border-solid border-black'>Godzina zakończenia</th>
-      </tr>
-      {records.map((record: Record, index: number) => {
-        return (
-          <tr key={index}>
+    <div className="bg-white rounded-lg shadow">
+      <div className="flex items-center justify-between bg-gray-100 p-4 border-b border-gray-200 ">
+        <div className="font-bold text-lg">Tabela danych</div>
+        <div className="text-sm text-gray-500">Ilość zadań: {records.length}</div>
+      </div>
+      <div className="divide-y divide-gray-200">
+        <div className="flex bg-gray-100 p-4">
+          <div className="flex-grow font-bold">Nazwa zadania</div>
+          <div className="flex-grow font-bold">Czas</div>
+          <div className="flex-grow font-bold">Rodzaj zadania</div>
+          <div className="flex-grow font-bold">Godzina rozpoczęcia</div>
+          <div className="flex-grow font-bold">Godzina zakończenia</div>
+        </div>
+        {records.map((record: Record, index: number) => (
+          <div key={index} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} p-4`}>
             <SingleRecord record={record} />
-          </tr>
-        );
-      })}
-    </>
+          </div>         
+        ))}
+      </div>
+    </div>
+    
   );
 };
 
