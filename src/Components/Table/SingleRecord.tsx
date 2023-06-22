@@ -20,6 +20,12 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
   };
 
   const getCategoryColor = (category: string) => {
+    if (!category || category.length === 0) {
+      // Handle empty or undefined category
+      return '#000000'; // Default color
+    }
+
+    // Generate a hash code for the category
     let hash = 0;
     for (let i = 0; i < category.length; i++) {
       hash = category.charCodeAt(i) + ((hash << 5) - hash);
@@ -36,13 +42,13 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
 
   return (
     <div className="flex rounded-md shadow-md mb-2">
-      <div className="p-3 flex-grow w-1">{record.taskName}</div>
-      <div className="p-3 flex-grow w-1">{time(record.taskTime)}</div>
-      <div className="p-3 flex-grow w-1" style={categoryBackgroundColor}>
+      <div className="p-3 flex-grow">{record.taskName}</div>
+      <div className="p-3 flex-grow">{time(record.taskTime)}</div>
+      <div className="p-3 flex-grow" style={categoryBackgroundColor}>
         {record.taskType}
       </div>
-      <div className="p-3 flex-grow w-1">{record.startTime}</div>
-      <div className="p-3 flex-grow w-1">{record.endTime}</div>
+      <div className="p-3 flex-grow">{record.startTime}</div>
+      <div className="p-3 flex-grow">{record.endTime}</div>
     </div>
   );
 };
