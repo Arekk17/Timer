@@ -21,17 +21,12 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
 
   const getCategoryColor = (category: string) => {
     if (!category || category.length === 0) {
-      // Handle empty or undefined category
-      return '#000000'; // Default color
+      return '#000000';
     }
-
-    // Generate a hash code for the category
     let hash = 0;
     for (let i = 0; i < category.length; i++) {
       hash = category.charCodeAt(i) + ((hash << 5) - hash);
     }
-
-    // Convert the hash code to a color
     const color = (hash & 0x00ffffff).toString(16).toUpperCase();
     return `#${'00000'.substring(0, 6 - color.length)}${color}`;
   };
