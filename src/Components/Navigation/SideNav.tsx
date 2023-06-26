@@ -58,7 +58,16 @@ const Sidenav = () => {
               className="block py-2 px-4 rounded transition duration-200 hover:bg-gray-700"
               onClick={handleMenuToggle}
             >
-              Raports
+              Graph
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/raport"
+              className="block py-2 px-4 rounded transition duration-200 hover:bg-gray-700"
+              onClick={handleMenuToggle}
+            >
+              Raport
             </Link>
           </li>
         </ul>
