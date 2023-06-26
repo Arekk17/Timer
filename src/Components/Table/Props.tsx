@@ -1,5 +1,5 @@
 import React from 'react';
-import { deleteRecord } from '../../MyServices/crudServices';
+import { deleteRecord } from '../../api/crudServices';
 
 interface PropsProps {
   record: any;

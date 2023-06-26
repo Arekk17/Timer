@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getData } from '../../MyServices/crudServices';
+import { getData } from '../../api/crudServices';
 import SingleRecord from './SingleRecord';
 
 export interface Record {

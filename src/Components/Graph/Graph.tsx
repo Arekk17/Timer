@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
-import { getData } from "../../MyServices/crudServices";
+import { getData } from "../../api/crudServices";
 
 interface Data {
   taskType: string;
