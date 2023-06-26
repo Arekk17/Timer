@@ -60,6 +60,7 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
       </div>
       <div className="p-3 flex-grow w-1/6">{record.startTime}</div>
       <div className="p-3 flex-grow w-1/6">{record.endTime}</div>
+      <div className="p-3 flex-grow w-1/6">{record.taskDate}</div>
       <div className="p-3 flex-grow w-1/6 cursor-pointer" onClick={handleDisplayProps}>
         <TrashIcon className="h-5 w-5 text-red-500" />
       </div>
