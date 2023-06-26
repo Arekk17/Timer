@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Record } from './DataTable';
-import Props from './Props'
+import { TrashIcon } from '@heroicons/react/24/solid'
+import Props from './Props';
 
 
 interface SingleRecordProps {
@@ -41,31 +42,32 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
 
   const handleDisplayProps = () => {
     setActiveProps(!activeProps);
-      
   };
 
- 
-
+  const handlePropsConfirmation = (confirmed: boolean) => {
+    if (confirmed) {
+      console.log('Record deleted:', record);
+    }
+    setActiveProps(false);
+  };
 
   return (
     <div className="flex rounded-md shadow-md">
       <div className="p-3 flex-grow w-1/6">{record.taskName}</div>
       <div className="p-3 flex-grow w-1/6">{time(record.taskTime)}</div>
       <div className="p-3 flex-grow w-1/6" style={categoryBackgroundColor}>
-        {record.taskType} 
-      </div> 
+        {record.taskType}
+      </div>
       <div className="p-3 flex-grow w-1/6">{record.startTime}</div>
       <div className="p-3 flex-grow w-1/6">{record.endTime}</div>
-      <div className="p-3 flex-grow w-1/6"
-        onClick={handleDisplayProps}
-      >delete</div>
+      <div className="p-3 flex-grow w-1/6 cursor-pointer" onClick={handleDisplayProps}>
+        <TrashIcon className="h-5 w-5 text-red-500" />
+      </div>
 
-      {activeProps ? (
-        <Props record={record}/>
-      ) : (
-        <></>
+      {activeProps && (
+        <Props record={record} onConfirmation={handlePropsConfirmation} />
       )}
-    </div>    
+    </div>
   );
 };
 
