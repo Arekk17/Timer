@@ -32,19 +32,20 @@ const DataTable: React.FC<DataTableProps> = ({ refreshData }) => {
         <div className="text-sm text-gray-500">Ilość zadań: {records.length}</div>
       </div>
       <div className="divide-y divide-gray-200">
-        <div className="flex bg-gray-100 p-4">
-          <div className="flex-grow font-bold">Nazwa zadania</div>
-          <div className="flex-grow font-bold">Czas</div>
-          <div className="flex-grow font-bold">Rodzaj zadania</div>
-          <div className="flex-grow font-bold">Godzina rozpoczęcia</div>
-          <div className="flex-grow font-bold">Godzina zakończenia</div>
+        <div className="flex bg-gray-100 px-6 py-4">
+          <div className="flex-grow font-bold w-1/6">Nazwa zadania</div>
+          <div className="flex-grow font-bold w-1/6">Czas</div>
+          <div className="flex-grow font-bold w-1/6">Rodzaj zadania</div>
+          <div className="flex-grow font-bold w-1/6">Godzina rozpoczęcia</div>
+          <div className="flex-grow font-bold w-1/6">Godzina zakończenia</div>
+          <div className="flex-grow font-bold w-1/6"></div>
         </div>
         {records.map((record: Record, index: number) => (
           <div key={index} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} p-4`}>
             <SingleRecord record={record} />
           </div>         
-        ))}
-      </div>
+        ))}        
+      </div>      
     </div>
     
   );
