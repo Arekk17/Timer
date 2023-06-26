@@ -1,10 +1,17 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import db from './firebaseServices'
 
 interface Data {
   taskName: string;
   taskType: string;
-  taskTime: number;
+  taskTime: number;  
+}
+
+interface DataDelete {
+  taskName: string;
+  taskType: string;
+  taskTime: number; 
+  id: string; 
 }
 
 export async function getData() {
@@ -24,5 +31,12 @@ export async function addData(data: Data) {
   } catch (error) {
     console.error("Wystąpił błąd podczas dodawania danych do Firebase:", error);
   }
+}
+
+export async function deleteRecord(record: DataDelete){  
+  const myCollection = collection(db, 'tasks');
+  const docRef = await doc(myCollection, record.id);  
+  deleteDoc(docRef)
+  console.log("Dokument deleted with ID:", docRef.id);
 }
 

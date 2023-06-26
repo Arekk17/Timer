@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Record } from './DataTable';
+import Props from './Props'
+
 
 interface SingleRecordProps {
   record: Record;
@@ -35,16 +37,35 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
     backgroundColor: getCategoryColor(record.taskType),
   };
 
+  const [activeProps, setActiveProps] = useState(false);
+
+  const handleDisplayProps = () => {
+    setActiveProps(!activeProps);
+      
+  };
+
+ 
+
+
   return (
-    <div className="flex rounded-md shadow-md mb-2">
-      <div className="p-3 flex-grow">{record.taskName}</div>
-      <div className="p-3 flex-grow">{time(record.taskTime)}</div>
-      <div className="p-3 flex-grow" style={categoryBackgroundColor}>
-        {record.taskType}
-      </div>
-      <div className="p-3 flex-grow">{record.startTime}</div>
-      <div className="p-3 flex-grow">{record.endTime}</div>
-    </div>
+    <div className="flex rounded-md shadow-md">
+      <div className="p-3 flex-grow w-1/6">{record.taskName}</div>
+      <div className="p-3 flex-grow w-1/6">{time(record.taskTime)}</div>
+      <div className="p-3 flex-grow w-1/6" style={categoryBackgroundColor}>
+        {record.taskType} 
+      </div> 
+      <div className="p-3 flex-grow w-1/6">{record.startTime}</div>
+      <div className="p-3 flex-grow w-1/6">{record.endTime}</div>
+      <div className="p-3 flex-grow w-1/6"
+        onClick={handleDisplayProps}
+      >delete</div>
+
+      {activeProps ? (
+        <Props record={record}/>
+      ) : (
+        <></>
+      )}
+    </div>    
   );
 };
 
