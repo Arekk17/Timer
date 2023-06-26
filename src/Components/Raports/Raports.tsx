@@ -54,9 +54,11 @@ const Data: React.FC<DataTableProps> = ({ refreshData }) => {
     const date = new Date(event.target.value);
     setEndDate(date);
   };
+
   const handleSetFilter = () => {
-    setFilterApplied(true)
-  } 
+    setFilterApplied(true);
+  };
+
   const handleResetFilter = () => {
     setFilterApplied(false);
     setStartDate(null);
@@ -78,25 +80,25 @@ const Data: React.FC<DataTableProps> = ({ refreshData }) => {
 
   return (
     <div className="bg-white rounded-lg shadow">
-      <div className="flex items-center justify-between bg-gray-100 p-4 border-b border-gray-200 ">
+      <div className="flex items-center justify-between bg-gray-100 p-4 border-b border-gray-200">
         <div className="font-bold text-lg">Tabela danych</div>
         <div className="text-sm text-gray-500">Ilość zadań: {filteredRecords.length}</div>
       </div>
-      <div className="flex items-center justify-between px-4 py-2">
-        <div>
+      <div className="flex flex-col lg:flex-row items-center justify-between px-4 py-2">
+        <div className="flex flex-col lg:flex-row">
           <label htmlFor="startDate" className="mr-2">
             Data początkowa:
           </label>
           <input type="date" id="startDate" value={startDate ? moment(startDate).format('YYYY-MM-DD') : ''} onChange={handleStartDateChange} />
         </div>
-        <div>
+        <div className="flex flex-col lg:flex-row mt-2 lg:mt-0">
           <label htmlFor="endDate" className="mr-2">
             Data końcowa:
           </label>
           <input type="date" id="endDate" value={endDate ? moment(endDate).format('YYYY-MM-DD') : ''} onChange={handleEndDateChange} />
         </div>
-        <div>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded ml-2" onClick={handleSetFilter}>
+        <div className="flex flex-col lg:flex-row mt-2 lg:mt-0">
+          <button className="bg-blue-500 text-white px-4 py-2 rounded ml-2" onClick={handleSetFilter}>
             Filtruj
           </button>
           <button className="bg-gray-500 text-white px-4 py-2 rounded ml-2" onClick={handleResetFilter}>
