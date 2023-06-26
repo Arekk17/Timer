@@ -1,12 +1,12 @@
 import React from 'react';
 import { deleteRecord } from '../../api/crudServices';
 
-interface PropsProps {
+interface DeletePopupProps {
   record: any;
   onConfirmation: (confirmed: boolean) => void;
 }
 
-const Props: React.FC<PropsProps> = ({ record, onConfirmation }) => {
+const DeletePopup: React.FC<DeletePopupProps> = ({ record, onConfirmation }) => {
   const handleDeleteClick = () => {
     deleteRecord(record)
     onConfirmation(true);
@@ -29,4 +29,4 @@ const Props: React.FC<PropsProps> = ({ record, onConfirmation }) => {
   );
 };
 
-export default Props;
+export default DeletePopup;

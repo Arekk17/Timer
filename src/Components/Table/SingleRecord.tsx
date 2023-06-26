@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Record } from './DataTable';
 import { TrashIcon } from '@heroicons/react/24/solid'
-import Props from './Props';
+import Props from './DeletePopup';
 
 
 interface SingleRecordProps {
