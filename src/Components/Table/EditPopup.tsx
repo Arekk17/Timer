@@ -91,12 +91,12 @@ const EditPopup: React.FC<EditPopupProps> = ({ record, onConfirmation }) => {
                   </div>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row sm:justify-end gap-2 sm:px-6">
-                  <TimerInput
-                    label="Tytuł zadania"
-                    value={record.taskName}
-                    onChange={handleTitleChange}
-                    error={formData.titleError}
-                  />
+                  {/* <TimerInput
+                     label="Tytuł zadania"
+                     value={record.taskName}
+                     onChange={handleTitleChange}
+                     error={formData.titleError} 
+                     suggestions={[]}                  /> */}
                 </div>
               </Dialog.Panel>
              ))}

@@ -41,3 +41,15 @@ export async function deleteRecord(record: DataDelete){
   console.log("Dokument deleted with ID:", docRef.id);
 }
 
+export const fetchExistingTaskTypes = async () => {
+  try {
+    const myCollection = collection(db, "tasks");
+    const myDocuments = await getDocs(myCollection);
+
+    const taskTypes = myDocuments.docs.map((doc) => doc.data().taskType);
+    return taskTypes;
+  } catch (error) {
+    console.error("Wystąpił błąd podczas pobierania istniejących rodzajów zadań:", error);
+    return [];
+  }
+};

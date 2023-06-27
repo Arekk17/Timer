@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { addData } from '../../api/crudServices';
+import { addData, fetchExistingTaskTypes } from '../../api/crudServices';
 import TimerInput from './TimerInput';
 import TimerDisplay from './TimerDisplay';
 
@@ -19,6 +19,8 @@ const TaskTimer: React.FC<TaskTimerProps> = ({ handleDataRefresh }) => {
     endTime: '',
   });
 
+  const [existingTaskTypes, setExistingTaskTypes] = useState<string[]>([]);
+
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
@@ -27,6 +29,14 @@ const TaskTimer: React.FC<TaskTimerProps> = ({ handleDataRefresh }) => {
         setFormData((prevData) => ({ ...prevData, time: prevData.time + 1 }));
       }, 1000);
     }
+
+    fetchExistingTaskTypes()
+      .then((taskTypes) => {
+        setExistingTaskTypes(taskTypes);
+      })
+      .catch((error) => {
+        console.error('Error fetching existing task types:', error);
+      });
 
     return () => {
       clearInterval(timer);
@@ -102,12 +112,14 @@ const TaskTimer: React.FC<TaskTimerProps> = ({ handleDataRefresh }) => {
   return (
     <div className="p-4 flex flex-col md:flex-row md:items-center md:border-b">
       <div className="md:flex-1">
-        <TimerInput
-          label="Tytuł zadania"
+        <label className='ml-1'>Tytuł zadania</label>
+        <input
+          type="text"
+          className="px-4 rounded-lg "
           value={formData.title}
-          onChange={handleTitleChange}
-          error={formData.titleError}
+          onChange={(e) => handleTitleChange(e.target.value)}
         />
+        {formData.titleError && <span className="error">Pole jest wymagane.</span>}
       </div>
       <div className="md:flex-1">
         <TimerInput
@@ -115,6 +127,7 @@ const TaskTimer: React.FC<TaskTimerProps> = ({ handleDataRefresh }) => {
           value={formData.taskType}
           onChange={handleTaskTypeChange}
           error={formData.taskTypeError}
+          suggestions={existingTaskTypes}
         />
       </div>
       <div className="flex items-center mt-4 md:mt-0">
