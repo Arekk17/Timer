@@ -11,7 +11,7 @@ interface DataTableProps {
   refreshData: boolean;
 }
 
-const Raports: React.FC<DataTableProps> = ({ refreshData }) => {
+const RaportsComponents: React.FC<DataTableProps> = ({ refreshData }) => {
   const [records, setRecords] = useState<Record[]>([]);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -128,4 +128,4 @@ const Raports: React.FC<DataTableProps> = ({ refreshData }) => {
   );
 };
 
-export default Raports;
+export default RaportsComponents;
