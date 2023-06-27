@@ -3,6 +3,7 @@ import { addData } from '../../api/crudServices';
 import TimerInput from './TimerInput';
 import TimerDisplay from './TimerDisplay';
 
+
 interface TaskTimerProps {
   handleDataRefresh: () => void;
 }
@@ -125,6 +126,7 @@ const TaskTimer: React.FC<TaskTimerProps> = ({ handleDataRefresh }) => {
           </button>
         </div>
       </div>
+      
     </div>
   );
 };

@@ -33,12 +33,14 @@ const DataTable: React.FC<DataTableProps> = ({ refreshData }) => {
       </div>
       <div className="divide-y divide-gray-200">
         <div className="flex bg-gray-100 px-6 py-4">
-          <div className="flex-grow font-bold w-1/6">Nazwa zadania</div>
-          <div className="flex-grow font-bold w-1/6">Czas</div>
-          <div className="flex-grow font-bold w-1/6">Rodzaj zadania</div>
-          <div className="flex-grow font-bold w-1/6">Godzina rozpoczęcia</div>
-          <div className="flex-grow font-bold w-1/6">Godzina zakończenia</div>
-          <div className="flex-grow font-bold w-1/6"></div>
+          <div className="flex-grow font-bold w-2/12">Nazwa zadania</div>
+          <div className="flex-grow font-bold w-2/12 px-3">Czas</div>
+          <div className="flex-grow font-bold w-2/12 px-3">Rodzaj zadania</div>
+          <div className="flex-grow font-bold w-2/12 px-3">Godzina rozpoczęcia</div>
+          <div className="flex-grow font-bold w-2/12 px-3">Godzina zakończenia</div>
+          <div className="flex-grow font-bold w-2/12 px-3">Data</div>
+          <div className="flex-grow font-bold w-1/12 px-3"></div>
+          <div className="flex-grow font-bold w-1/12 px-3"></div>
         </div>
         {records.map((record: Record, index: number) => (
           <div key={index} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} p-4`}>

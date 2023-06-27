@@ -51,6 +51,12 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
     setActiveProps(false);
   };
 
+  const [activeDeleteProps, setActiveDeleteProps] = useState(false);
+
+  const handleDisplayDeleteProps = () => {
+    setActiveDeleteProps(!activeDeleteProps);
+  };
+
   return (
     <div className="flex rounded-md shadow-md">
       <div className="p-3 flex-grow w-1/6">{record.taskName}</div>
