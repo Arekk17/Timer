@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { addData } from '../../MyServices/crudServices';
+import { addData } from '../../api/crudServices';
 import TimerInput from './TimerInput';
 import TimerDisplay from './TimerDisplay';
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
-import { getData } from "../../MyServices/crudServices";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LabelList } from "recharts";
+import { getData } from "../../api/crudServices";
 
 interface Data {
   taskType: string;
@@ -13,7 +13,7 @@ const ChartComponent: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fetchedData: { [field: string]: any; }[] = await getData();
+        const fetchedData: { [field: string]: any }[] = await getData();
         const processedData: Data[] = processData(fetchedData);
         setChartData(processedData);
       } catch (error) {
@@ -24,7 +24,7 @@ const ChartComponent: React.FC = () => {
     fetchData();
   }, []);
 
-  const processData = (data: { [field: string]: any; }[]): Data[] => {
+  const processData = (data: { [field: string]: any }[]): Data[] => {
     const groupedData: { [taskType: string]: number } = data.reduce((result, item) => {
       const { taskType, taskTime } = item;
       if (result[taskType]) {
@@ -41,16 +41,25 @@ const ChartComponent: React.FC = () => {
     }));
   };
 
+  const formatTime = (timeInSeconds: number) => {
+    const hours = Math.floor(timeInSeconds / 3600);
+    const minutes = Math.floor((timeInSeconds % 3600) / 60);
+    const seconds = timeInSeconds % 60;
+    return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  };
+
   return (
     <div className="w-full flex justify-center">
       <div className="overflow-x-auto mt-8">
-      <BarChart width={900}height={400} data={chartData}>
+        <BarChart width={900} height={400} data={chartData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="taskType" />
-          <YAxis />
-          <Tooltip />
+          <YAxis tickFormatter={formatTime} />
+          <Tooltip labelFormatter={() => ""} formatter={(value: number) => formatTime(value)} />
           <Legend />
-          <Bar dataKey="taskTime" fill="#576fcd" />
+          <Bar dataKey="taskTime" fill="#576fcd">
+            <LabelList dataKey="taskTime" position="top" formatter={(value: number) => formatTime(value)} />
+          </Bar>
         </BarChart>
       </div>
     </div>

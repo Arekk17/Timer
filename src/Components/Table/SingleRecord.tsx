@@ -42,11 +42,14 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
 
   const handleDisplayProps = () => {
     setActiveProps(!activeProps);
-      
   };
 
- 
-
+  const handlePropsConfirmation = (confirmed: boolean) => {
+    if (confirmed) {
+      console.log('Record deleted:', record);
+    }
+    setActiveProps(false);
+  };
 
   const [activeDeleteProps, setActiveDeleteProps] = useState(false);
 
@@ -68,10 +71,8 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
         <TrashIcon className="h-5 w-5 text-red-500" />
       </div>
 
-      {activeProps ? (
-        <Props record={record}/>
-      ) : (
-        <></>
+      {activeProps && (
+        <Props record={record} onConfirmation={handlePropsConfirmation} />
       )}
     </div>
   );

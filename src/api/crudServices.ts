@@ -4,6 +4,7 @@ import db from './firebaseServices'
 interface Data {
   taskName: string;
   taskType: string;
+  taskDate: string;
   taskTime: number;  
 }
 

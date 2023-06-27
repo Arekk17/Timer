@@ -2,13 +2,10 @@ import React, { useState, Fragment } from 'react';
 import { deleteRecord } from '../../api/crudServices';
 import { Dialog, Transition } from '@headlessui/react'
 
-
 interface DeletePopupProps {
   record: any;
   onConfirmation: (confirmed: boolean) => void;
 }
-
-
 
 const DeletePopup: React.FC<DeletePopupProps> = ({
   record,
@@ -75,7 +72,6 @@ const DeletePopup: React.FC<DeletePopupProps> = ({
                     type="button"
                     className="mt-3 inline-flex w-full justify-center rounded-md bg-gray-300 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-400 sm:mt-0 sm:w-auto border-none"
                     onClick={handleCancelClick}
-                   
                   >
                     Nie
                   </button>
