@@ -99,13 +99,13 @@ const RaportsComponents: React.FC<DataTableProps> = ({ refreshData }) => {
           <input type="date" id="endDate" value={endDate ? moment(endDate).format('YYYY-MM-DD') : ''} onChange={handleEndDateChange} />
         </div>
         <div className="flex flex-col lg:flex-row mt-2 lg:mt-0">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded ml-2" onClick={handleSetFilter}>
+          <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded ml-2" onClick={handleSetFilter}>
             Filtruj
           </button>
-          <button className="bg-gray-500 text-white px-4 py-2 rounded ml-2" onClick={handleResetFilter}>
+          <button className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded ml-2" onClick={handleResetFilter}>
             Resetuj filtr
           </button>
-          <button className="bg-gray-500 text-white px-4 py-2 rounded ml-2" onClick={handleDownloadPDF}>
+          <button className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded ml-2" onClick={handleDownloadPDF}>
             Pobierz PDF
           </button>
         </div>

@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock, faChartBar, faClipboard } from '@fortawesome/free-solid-svg-icons';
+import Ripples from 'react-ripples';
 
 const Sidenav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -44,31 +47,40 @@ const Sidenav = () => {
       >
         <ul className="space-y-2">
           <li>
-            <Link
-              to="/"
-              className="block py-2 px-4 rounded transition duration-200 hover:bg-gray-700"
-              onClick={handleMenuToggle}
-            >
-              Timer
-            </Link>
+            <Ripples color="rgba(255, 255, 255, 0.3)" className='w-full'>
+              <Link
+                to="/"
+                className="block py-2 px-4 w-full rounded transition duration-200 hover:bg-gray-700"
+                onClick={handleMenuToggle}
+              >
+                <FontAwesomeIcon icon={faClock} className="mr-2" />
+                Timer
+              </Link>
+            </Ripples>
           </li>
           <li>
-            <Link
-              to="/graph"
-              className="block py-2 px-4 rounded transition duration-200 hover:bg-gray-700"
-              onClick={handleMenuToggle}
-            >
-              Graph
-            </Link>
+            <Ripples color="rgba(255, 255, 255, 0.3)" className='w-full'>
+              <Link
+                to="/graph"
+                className="block py-2 px-4 w-full rounded transition duration-200 hover:bg-gray-700"
+                onClick={handleMenuToggle}
+              >
+                <FontAwesomeIcon icon={faChartBar} className="mr-2" />
+                Graph
+              </Link>
+            </Ripples>
           </li>
           <li>
-            <Link
-              to="/raport"
-              className="block py-2 px-4 rounded transition duration-200 hover:bg-gray-700"
-              onClick={handleMenuToggle}
-            >
-              Raport
-            </Link>
+            <Ripples color="rgba(255, 255, 255, 0.3)" className='w-full'>
+              <Link
+                to="/raport"
+                className="block py-2 px-4 w-full rounded transition duration-200 hover:bg-gray-700"
+                onClick={handleMenuToggle}
+              >
+                <FontAwesomeIcon icon={faClipboard} className="mr-2" />
+                Raport
+              </Link>
+            </Ripples>
           </li>
         </ul>
       </nav>
