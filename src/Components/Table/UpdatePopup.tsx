@@ -1,9 +1,10 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { updateRecord } from '../../api/crudServices';
+import { Record } from './DataTable';
 
 interface UpdatePopupProps {
-  record: any;
+  record: Record;
   onConfirmation: (confirmed: boolean) => void;
 }
 
@@ -59,7 +60,6 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
   const handleUpdateClick = () => {
     updateRecord(formData);
     onConfirmation(true);
-    // console.log(formData)
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
