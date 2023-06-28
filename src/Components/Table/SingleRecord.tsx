@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Record } from './DataTable';
-import { TrashIcon } from '@heroicons/react/24/solid'
+import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/solid';
 import Props from './DeletePopup';
+import { UpdatePopup } from './UpdatePopup';
 
 
 interface SingleRecordProps {
@@ -51,23 +52,57 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
     setActiveProps(false);
   };
 
+  // const [activeDeleteProps, setActiveDeleteProps] = useState(false);
+
+  // const handleDisplayDeleteProps = () => {
+  //   setActiveDeleteProps(!activeDeleteProps);
+  // };
+
+  const [activeUpdateProps, setActiveUpdateProps] = useState(false)
+
+  const handleDisplayUpdateProps = () => {
+    setActiveUpdateProps(!activeUpdateProps)
+  }
+
+  const handleUpdateConfirmation = ( confirmed: boolean) => {
+    if (confirmed){
+      console.log('Record updated', record)
+    }
+    setActiveUpdateProps(false)
+  }
+
   return (
     <div className="flex rounded-md shadow-md">
-      <div className="p-3 flex-grow w-1/6">{record.taskName}</div>
-      <div className="p-3 flex-grow w-1/6">{time(record.taskTime)}</div>
-      <div className="p-3 flex-grow w-1/6" style={categoryBackgroundColor}>
+      <div className="p-3 flex-grow w-2/12">{record.taskName}</div>
+      <div className="p-3 flex-grow w-2/12">{time(record.taskTime)}</div>
+      <div className="p-3 flex-grow w-2/12" style={categoryBackgroundColor}>
         {record.taskType}
       </div>
-      <div className="p-3 flex-grow w-1/6">{record.startTime}</div>
-      <div className="p-3 flex-grow w-1/6">{record.endTime}</div>
-      <div className="p-3 flex-grow w-1/6">{record.taskDate}</div>
-      <div className="p-3 flex-grow w-1/6 cursor-pointer" onClick={handleDisplayProps}>
+      <div className="p-3 flex-grow w-2/12">{record.startTime}</div>
+      <div className="p-3 flex-grow w-2/12">{record.endTime}</div>
+      <div className="p-3 flex-grow w-2/12">{record.taskDate}</div>
+      <div
+        className="p-3 flex-grow w-1/12 cursor-pointer"
+        onClick={handleDisplayProps}
+      >
         <TrashIcon className="h-5 w-5 text-red-500" />
+      </div>
+      <div
+        className="p-3 flex-grow w-1/12 cursor-pointer"
+        onClick={handleDisplayUpdateProps}
+      >
+        <PencilSquareIcon className="h-5 w-5 text-black" />
       </div>
 
       {activeProps && (
         <Props record={record} onConfirmation={handlePropsConfirmation} />
       )}
+
+
+      {activeUpdateProps && (
+        <UpdatePopup record={record} onConfirmation={handleUpdateConfirmation}/>
+      )}
+     
     </div>
   );
 };

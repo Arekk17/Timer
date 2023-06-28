@@ -24,8 +24,8 @@ const App = () => {
         <Sidenav />
         <div className="flex-grow bg-gray-200 pb-10">
           <Routes>
-            {/* Dodaj swoje trasy tutaj */}
-            <Route path="/" element={<TaskTimer handleDataRefresh={handleDataRefresh} />} />
+            {/* Dodaj swoje trasy tutaj */}            
+            <Route path="/" element={<TaskTimer handleDataRefresh={handleDataRefresh} />} ></Route>
             <Route path="/graph" element={<ChartComponent />} />
             <Route path="/raport" element={<Data refreshData={refreshData} />} />
           </Routes>
