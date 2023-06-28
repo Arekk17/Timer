@@ -5,12 +5,13 @@ import { Record } from '../Table/DataTable';
 import moment from 'moment';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import DataTableHeader from '../Table/DataTableHeader';
 
 interface DataTableProps {
   refreshData: boolean;
 }
 
-const Data: React.FC<DataTableProps> = ({ refreshData }) => {
+const RaportsComponents: React.FC<DataTableProps> = ({ refreshData }) => {
   const [records, setRecords] = useState<Record[]>([]);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -110,15 +111,7 @@ const Data: React.FC<DataTableProps> = ({ refreshData }) => {
         </div>
       </div>
       <div className="divide-y divide-gray-200" ref={tableRef}>
-        <div className="flex bg-gray-100 px-6 py-4">
-          <div className="flex-grow font-bold w-1/6">Nazwa zadania</div>
-          <div className="flex-grow font-bold w-1/6">Czas</div>
-          <div className="flex-grow font-bold w-1/6">Rodzaj zadania</div>
-          <div className="flex-grow font-bold w-1/6">Godzina rozpoczęcia</div>
-          <div className="flex-grow font-bold w-1/6">Godzina zakończenia</div>
-          <div className="flex-grow font-bold w-1/6">Data</div>
-          <div className="flex-grow font-bold w-1/6"></div>
-        </div>
+        <DataTableHeader />
         {filterApplied
           ? filteredRecords.map((record: Record, index: number) => (
               <div key={index} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} p-4`}>
@@ -135,4 +128,4 @@ const Data: React.FC<DataTableProps> = ({ refreshData }) => {
   );
 };
 
-export default Data;
+export default RaportsComponents;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getData } from '../../api/crudServices';
 import SingleRecord from './SingleRecord';
+import DataTableHeader from './DataTableHeader';
 
 export interface Record {
   [key: string]: any;
@@ -32,16 +33,7 @@ const DataTable: React.FC<DataTableProps> = ({ refreshData }) => {
         <div className="text-sm text-gray-500">Ilość zadań: {records.length}</div>
       </div>
       <div className="divide-y divide-gray-200">
-        <div className="flex bg-gray-100 px-6 py-4">
-          <div className="flex-grow font-bold w-2/12">Nazwa zadania</div>
-          <div className="flex-grow font-bold w-2/12 px-3">Czas</div>
-          <div className="flex-grow font-bold w-2/12 px-3">Rodzaj zadania</div>
-          <div className="flex-grow font-bold w-2/12 px-3">Godzina rozpoczęcia</div>
-          <div className="flex-grow font-bold w-2/12 px-3">Godzina zakończenia</div>
-          <div className="flex-grow font-bold w-2/12 px-3">Data</div>
-          <div className="flex-grow font-bold w-1/12 px-3"></div>
-          <div className="flex-grow font-bold w-1/12 px-3"></div>
-        </div>
+        <DataTableHeader />
         {records.map((record: Record, index: number) => (
           <div key={index} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} p-4`}>
             <SingleRecord record={record} />

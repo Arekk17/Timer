@@ -5,21 +5,36 @@ interface TimerInputProps {
   value: string;
   onChange: (value: string) => void;
   error: boolean;
+  suggestions?: string[];
 }
 
-const TimerInput: React.FC<TimerInputProps> = ({ label, value, onChange, error }) => {
+const TimerInput: React.FC<TimerInputProps> = ({ label, value, onChange, error, suggestions }) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    onChange(newValue);
+  };
+
+  const uniqueSuggestions = suggestions ? [...new Set(suggestions)] : [];
+
   return (
-    <label className="block mb-2 font-bold sm:flex-grow" htmlFor={label}>
-      <span className="mb-1 sm:mb-0 sm:mr-2">{label}:</span>
+    <div>
+      <label>{label}</label>
       <input
-        id={label}
         type="text"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full lg:max-w-xs p-2 border border-gray-300 rounded"
+        onChange={handleInputChange}
+        list="taskTypeSuggestions"
+        className="px-4 rounded-lg "
       />
-      {error && <span className="text-red-500 text-sm">Uzupełnij pole {label}.</span>}
-    </label>
+      {error && <span className="error">Pole jest wymagane.</span>}
+      {uniqueSuggestions.length > 0 && (
+        <datalist id="taskTypeSuggestions">
+          {uniqueSuggestions.map((suggestion) => (
+            <option value={suggestion} key={suggestion} />
+          ))}
+        </datalist>
+      )}
+    </div>
   );
 };
 
