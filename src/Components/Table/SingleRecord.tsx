@@ -4,7 +4,6 @@ import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/solid';
 import Props from './DeletePopup';
 import { UpdatePopup } from './UpdatePopup';
 
-
 interface SingleRecordProps {
   record: Record;
 }
@@ -52,58 +51,56 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
     setActiveProps(false);
   };
 
-  // const [activeDeleteProps, setActiveDeleteProps] = useState(false);
-
-  // const handleDisplayDeleteProps = () => {
-  //   setActiveDeleteProps(!activeDeleteProps);
-  // };
-
-  const [activeUpdateProps, setActiveUpdateProps] = useState(false)
+  const [activeUpdateProps, setActiveUpdateProps] = useState(false);
 
   const handleDisplayUpdateProps = () => {
-    setActiveUpdateProps(!activeUpdateProps)
-  }
+    setActiveUpdateProps(!activeUpdateProps);
+  };
 
-  const handleUpdateConfirmation = ( confirmed: boolean) => {
-    if (confirmed){
-      console.log('Record updated', record)
+  const handleUpdateConfirmation = (confirmed: boolean) => {
+    if (confirmed) {
+      console.log('Record updated', record);
     }
-    setActiveUpdateProps(false)
-  }
+    setActiveUpdateProps(false);
+  };
 
   return (
-    <div className="flex rounded-md shadow-md">
-      <div className="p-3 flex-grow w-2/12">{record.taskName}</div>
-      <div className="p-3 flex-grow w-2/12">{time(record.taskTime)}</div>
-      <div className="p-3 flex-grow w-2/12" style={categoryBackgroundColor}>
+    <>
+      <td className="px-6 py-4 whitespace-nowrap">{record.taskName}</td>
+      <td className="px-6 py-4 whitespace-nowrap">{time(record.taskTime)}</td>
+      <td
+        className="px-6 py-4 whitespace-nowrap"
+        style={categoryBackgroundColor}
+      >
         {record.taskType}
-      </div>
-      <div className="p-3 flex-grow w-2/12">{record.startTime}</div>
-      <div className="p-3 flex-grow w-2/12">{record.endTime}</div>
-      <div className="p-3 flex-grow w-2/12">{record.taskDate}</div>
-      <div
-        className="p-3 flex-grow w-1/12 cursor-pointer"
-        onClick={handleDisplayProps}
-      >
-        <TrashIcon className="h-5 w-5 text-red-500" />
-      </div>
-      <div
-        className="p-3 flex-grow w-1/12 cursor-pointer"
-        onClick={handleDisplayUpdateProps}
-      >
-        <PencilSquareIcon className="h-5 w-5 text-black" />
-      </div>
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap">{record.startTime}</td>
+      <td className="px-6 py-4 whitespace-nowrap">{record.endTime}</td>
+      <td className="px-6 py-4 whitespace-nowrap">{record.taskDate}</td>
+      <td className="px-6 py-4 whitespace-nowrap cursor-pointer">
+        <TrashIcon
+          className="h-5 w-5 text-red-500"
+          onClick={handleDisplayProps}
+        />
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap cursor-pointer">
+        <PencilSquareIcon
+          className="h-5 w-5 text-black"
+          onClick={handleDisplayUpdateProps}
+        />
+      </td>
 
       {activeProps && (
         <Props record={record} onConfirmation={handlePropsConfirmation} />
       )}
 
-
       {activeUpdateProps && (
-        <UpdatePopup record={record} onConfirmation={handleUpdateConfirmation}/>
+        <UpdatePopup
+          record={record}
+          onConfirmation={handleUpdateConfirmation}
+        />
       )}
-     
-    </div>
+    </>
   );
 };
 

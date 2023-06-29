@@ -49,13 +49,20 @@ const DataTable: React.FC<DataTableProps> = ({ refreshData }) => {
           Ilość zadań: {records.length} | Całkowity czas: {formatTime(totalTime)}
         </div>
       </div>
-      <div className="divide-y divide-gray-200">
-        <DataTableHeader />
-        {records.map((record: Record, index: number) => (
-          <div key={index} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} p-4`}>
-            <SingleRecord record={record} />
-          </div>
-        ))}
+      <div className="overflow-x-auto">
+        <table className="min-w-full divide-y divide-gray-200">
+          <DataTableHeader />
+          <tbody>
+            {records.map((record: Record, index: number) => (
+              <tr
+                key={index}
+                className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
+              >
+                <SingleRecord record={record} />
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

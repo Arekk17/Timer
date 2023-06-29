@@ -110,18 +110,24 @@ const RaportsComponents: React.FC<DataTableProps> = ({ refreshData }) => {
           </button>
         </div>
       </div>
-      <div className="divide-y divide-gray-200" ref={tableRef}>
+      <div className="overflow-x-auto" ref={tableRef}>
         <DataTableHeader />
         {filterApplied
           ? filteredRecords.map((record: Record, index: number) => (
-              <div key={index} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} p-4`}>
+              <tr
+                key={index}
+                className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
+              >
                 <SingleRecord record={record} />
-              </div>
+              </tr>
             ))
           : records.map((record: Record, index: number) => (
-              <div key={index} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} p-4`}>
+              <tr
+                key={index}
+                className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
+              >
                 <SingleRecord record={record} />
-              </div>
+              </tr>
             ))}
       </div>
     </div>
