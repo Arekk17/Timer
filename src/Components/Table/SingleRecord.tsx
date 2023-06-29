@@ -10,7 +10,7 @@ interface SingleRecordProps {
 }
 
 const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
-  const time = (taskTime: any) => {
+  const time = (taskTime: number) => {
     const totalMinutes = Math.floor(taskTime / 60);
     const seconds = taskTime % 60;
     const hours = Math.floor(totalMinutes / 60);
