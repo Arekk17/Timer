@@ -58,22 +58,23 @@ export const fetchExistingTaskTypes = async () => {
     return [];
   }
 };
-
 export async function updateRecord(record: TaskData) {
-  if (record.id) {
-    const myCollection = collection(db, 'tasks');
-    const docRef = doc(myCollection, record.id);
+  try {
+    if (record.id) {
+      const myCollection = collection(db, 'tasks');
+      const docRef = doc(myCollection, record.id);
 
-    const updatedData: Partial<TaskData> = {
-      taskName: record.taskName,
-      taskType: record.taskType,
-      taskTime: record.taskTime,
-      taskDate: record.taskDate,
-      startTime: record.startTime,
-      endTime: record.endTime,
-    };
-
-    await updateDoc(docRef, updatedData);
-    console.log('Dokument updated with ID:', record.id);
+      const updatedData: Partial<TaskData> = {
+        taskName: record.taskName,
+        taskType: record.taskType,
+        taskTime: record.taskTime,
+        taskDate: record.taskDate,
+        startTime: record.startTime,
+        endTime: record.endTime,
+      };
+      await updateDoc(docRef, updatedData);
+    }
+  } catch (error) {
+    console.error('Wystąpił błąd podczas aktualizowania dokumentu:', error);
   }
 }
