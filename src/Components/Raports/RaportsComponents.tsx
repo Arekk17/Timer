@@ -48,7 +48,7 @@ const RaportsComponents: React.FC<DataTableProps> = ({ refreshData }) => {
 
   const handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const date = new Date(event.target.value);
-    setStartDate(date);
+    setStartDate(date);    
   };
 
   const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {

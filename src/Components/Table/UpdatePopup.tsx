@@ -67,6 +67,13 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
     console.log(e.target.value);
   };
 
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // const date = new Date(e.target.value).toLocaleDateString();
+    // setFormData({ ...formData, [e.target.name]: date });
+    // console.log(new Date(e.target.value).toLocaleDateString()); 
+    console.log(formData.taskDate)
+  };
+
   const [open, setOpen] = useState(true);
 
   return (
@@ -108,7 +115,7 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
                     </div>
                   </div>
                   <div className="flex flex-col p-2">
-                    <div>
+                    <div className="py-1 px-2">
                       <label className="pr-2">Nazwa zadania:</label>
                       <input
                         id="nazwa"
@@ -120,7 +127,7 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
                       />
                     </div>
 
-                    <div>
+                    <div className="py-1 px-2">
                       <label className="pr-2">Rodzaj zadania:</label>
                       <input
                         id="nazwa"
@@ -132,7 +139,7 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
                       />
                     </div>
 
-                    <div>
+                    <div className="py-1 px-2">
                       <label className="pr-2">Godzina rozpoczęcia:</label>
                       <input
                         id="nazwa"
@@ -145,7 +152,7 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
                       />
                     </div>
 
-                    <div>
+                    <div className="py-1 px-2">
                       <label className="pr-2">Godzina zakończenia:</label>
                       <input
                         id="nazwa"
@@ -158,13 +165,13 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
                       />
                     </div>
 
-                    <div>
+                    <div className="py-1 px-2">
                       <label className="pr-2">Data:</label>
                       <input
                         id="nazwa"
                         name="taskDate"
                         value={formData.taskDate}
-                        onChange={handleChange}
+                        onChange={handleDateChange}
                         type="date"
                         placeholder={record.taskDate}
                       />
