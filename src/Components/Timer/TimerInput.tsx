@@ -8,7 +8,7 @@ interface TimerInputProps {
   suggestions?: string[];
 }
 
-const TimerInput: React.FC<TimerInputProps> = ({ label, value, onChange, error, suggestions }) => {
+const TimerInput: React.FC<TimerInputProps> = ({ value, onChange, error, suggestions }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     onChange(newValue);
@@ -18,15 +18,14 @@ const TimerInput: React.FC<TimerInputProps> = ({ label, value, onChange, error, 
 
   return (
     <div>
-      <label>{label}</label>
       <input
         type="text"
         value={value}
         onChange={handleInputChange}
         list="taskTypeSuggestions"
-        className="px-4 rounded-lg "
+        className={`ml-5 rounded-lg border focus:outline-none focus:ring focus:border-blue-300 ${error ? 'border-red-500' : ''}`}
       />
-      {error && <span className="error">Pole jest wymagane.</span>}
+      {error && <span className="text-red-500 block text-sm mt-1">Pole jest wymagane.</span>}
       {uniqueSuggestions.length > 0 && (
         <datalist id="taskTypeSuggestions">
           {uniqueSuggestions.map((suggestion) => (

@@ -99,29 +99,35 @@ const RaportsComponents: React.FC<DataTableProps> = ({ refreshData }) => {
           <input type="date" id="endDate" value={endDate ? moment(endDate).format('YYYY-MM-DD') : ''} onChange={handleEndDateChange} />
         </div>
         <div className="flex flex-col lg:flex-row mt-2 lg:mt-0">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded ml-2" onClick={handleSetFilter}>
+          <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded ml-2" onClick={handleSetFilter}>
             Filtruj
           </button>
-          <button className="bg-gray-500 text-white px-4 py-2 rounded ml-2" onClick={handleResetFilter}>
+          <button className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded ml-2" onClick={handleResetFilter}>
             Resetuj filtr
           </button>
-          <button className="bg-gray-500 text-white px-4 py-2 rounded ml-2" onClick={handleDownloadPDF}>
+          <button className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded ml-2" onClick={handleDownloadPDF}>
             Pobierz PDF
           </button>
         </div>
       </div>
-      <div className="divide-y divide-gray-200" ref={tableRef}>
+      <div className="overflow-x-auto" ref={tableRef}>
         <DataTableHeader />
         {filterApplied
           ? filteredRecords.map((record: Record, index: number) => (
-              <div key={index} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} p-4`}>
+              <tr
+                key={index}
+                className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
+              >
                 <SingleRecord record={record} />
-              </div>
+              </tr>
             ))
           : records.map((record: Record, index: number) => (
-              <div key={index} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} p-4`}>
+              <tr
+                key={index}
+                className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
+              >
                 <SingleRecord record={record} />
-              </div>
+              </tr>
             ))}
       </div>
     </div>

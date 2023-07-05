@@ -3,7 +3,6 @@ import { addData, fetchExistingTaskTypes } from '../../api/crudServices';
 import TimerInput from './TimerInput';
 import TimerDisplay from './TimerDisplay';
 
-
 interface TaskTimerProps {
   handleDataRefresh: () => void;
 }
@@ -111,18 +110,19 @@ const TaskTimer: React.FC<TaskTimerProps> = ({ handleDataRefresh }) => {
   };
 
   return (
-    <div className="p-4 flex flex-col md:flex-row md:items-center md:border-b">
-      <div className="md:flex-1">
-        <label className='ml-1'>Tytuł zadania</label>
+    <div className="w-full p-4 flex flex-col md:flex-row md:items-center md:border-b gap-10">
+      <div className=" flex justify-center ">
+        <label className="ml-1 wrap">Tytuł zadania</label>
         <input
           type="text"
-          className="px-4 rounded-lg "
+          className="ml-5 rounded-lg border focus:outline-none focus:ring focus:border-blue-300"
           value={formData.title}
           onChange={(e) => handleTitleChange(e.target.value)}
         />
-        {formData.titleError && <span className="error">Pole jest wymagane.</span>}
+        {formData.titleError && <span className="text-red-500 text-sm mt-1">Pole jest wymagane.</span>}
       </div>
-      <div className="md:flex-1">
+      <div className="flex justify-center ">
+        <label className="ml-1">Rodzaj zadania</label>
         <TimerInput
           label="Rodzaj zadania"
           value={formData.taskType}
@@ -137,14 +137,13 @@ const TaskTimer: React.FC<TaskTimerProps> = ({ handleDataRefresh }) => {
           <button
             onClick={handleTimerToggle}
             className={`px-4 py-2 ${
-              formData.isTimerRunning ? 'bg-red-500 hover:bg-red-700' : 'bg-blue-500'
-            } text-white rounded hover:bg-blue-600`}
+              formData.isTimerRunning ? 'bg-red-500 hover:bg-red-700' : 'bg-blue-500 hover:bg-blue-600'
+            } text-white rounded focus:outline-none focus:ring focus:border-blue-300`}
           >
             {formData.isTimerRunning ? 'Zatrzymaj' : 'Rozpocznij'}
           </button>
         </div>
       </div>
-      
     </div>
   );
 };

@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBb07oort0xCP9L4GL-M5JlQCdVv5aeuH0",
-  authDomain: "timer-b4b61.firebaseapp.com",
-  projectId: "timer-b4b61",
-  storageBucket: "timer-b4b61.appspot.com",
-  messagingSenderId: "125627424224",
-  appId: "1:125627424224:web:09d9dbf393650df1485f85",
-  measurementId: "G-FPYD8W3901"
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
