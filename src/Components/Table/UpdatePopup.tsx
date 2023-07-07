@@ -1,16 +1,19 @@
-import React, { useState, Fragment, useEffect } from 'react';
+import React, { useState, Fragment} from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { updateRecord } from '../../api/crudServices';
 import { Record } from './DataTable';
+import { format } from 'date-fns'
 
 interface UpdatePopupProps {
   record: Record;
-  onConfirmation: (confirmed: boolean) => void;
+  onConfirmation: (confirmed: boolean) => void; 
+  refresh: Function;
 }
 
 export const UpdatePopup: React.FC<UpdatePopupProps> = ({
   record,
-  onConfirmation,
+  onConfirmation,  
+  refresh
 }) => {
   const [formData, setFormData] = useState({
     taskName: record.taskName,
@@ -22,59 +25,50 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
     id: record.id,
   });
 
-  
-  const [newTaskTimeStart, setNewTaskTimeStart] = useState(0);
-  const [newTaskTimeEnd, setNewTaskTimeEnd] = useState(0);
+  const [dataDisplay, setDataDisplay] = useState('0')
 
-  const changeToSeconds = () => {
-    const separate = formData.startTime.split(':').map(Number);
-    const hoursSeconds = separate[0] * 3600;
-    const minutesSeconds = separate[1] * 60;
-    const seconds = separate[2];
-    setNewTaskTimeStart(hoursSeconds + minutesSeconds + seconds);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const changeToSecondsEnd = () => {
-    const separate = formData.endTime.split(':').map(Number);
-    const hoursSeconds = separate[0] * 3600;
-    const minutesSeconds = separate[1] * 60;
-    const seconds = separate[2];
-    setNewTaskTimeEnd(hoursSeconds + minutesSeconds + seconds);
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const date = format(new Date(e.target.value), 'yyyy-MM-dd');
+    setDataDisplay(date)
+    setFormData({ ...formData, [e.target.name]: (new Date(e.target.value)).toLocaleDateString() });    
   };
-
-  const newTime = () => {
-    changeToSeconds();
-    changeToSecondsEnd();
-    const newTime = (newTaskTimeEnd - newTaskTimeStart)
-    setFormData({...formData, taskTime: newTime});
-  };
-
-  useEffect(() => {
-    newTime();
-  }, [newTaskTimeStart, newTaskTimeEnd]);
 
   const handleCancelClick = () => {
     onConfirmation(false);
   };
 
   const handleUpdateClick = () => {
-    updateRecord(formData);
+    refreshFunction();
+    const { startTime, endTime } = formData;
+    const newTaskTime = calculateTaskTimeInSeconds(startTime, endTime);
+    const updatedFormData = { ...formData, taskTime: newTaskTime };
+    console.log(updatedFormData);
+    updateRecord(updatedFormData);
     onConfirmation(true);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log(e.target.value);
+  const calculateTaskTimeInSeconds = (startTime: string, endTime: string) => {
+    const start = convertTimeToSeconds(startTime);
+    const end = convertTimeToSeconds(endTime);
+    return end - start;
   };
 
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const date = new Date(e.target.value).toLocaleDateString();
-    // setFormData({ ...formData, [e.target.name]: date });
-    // console.log(new Date(e.target.value).toLocaleDateString()); 
-    console.log(formData.taskDate)
+  const convertTimeToSeconds = (time: string) => {
+    const [hours, minutes, seconds] = time.split(':').map(Number);
+    return hours * 3600 + minutes * 60 + seconds;
   };
+
+ 
 
   const [open, setOpen] = useState(true);
+
+  const refreshFunction = () =>{
+    refresh()
+  }
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -104,6 +98,7 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+
                   <div className="sm:flex sm:items-start">
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                       <Dialog.Title
@@ -170,7 +165,7 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
                       <input
                         id="nazwa"
                         name="taskDate"
-                        value={formData.taskDate}
+                        value={dataDisplay}
                         onChange={handleDateChange}
                         type="date"
                         placeholder={record.taskDate}

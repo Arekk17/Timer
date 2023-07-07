@@ -79,6 +79,12 @@ const RaportsComponents: React.FC<DataTableProps> = ({ refreshData }) => {
     }
   };
 
+  const ShowData = () => {
+    getData().then((x) => {
+      setRecords(x);
+    });    
+  };
+
   return (
     <div className="bg-white rounded-lg shadow">
       <div className="flex items-center justify-between bg-gray-100 p-4 border-b border-gray-200">
@@ -118,7 +124,7 @@ const RaportsComponents: React.FC<DataTableProps> = ({ refreshData }) => {
                 key={index}
                 className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
               >
-                <SingleRecord record={record} />
+                <SingleRecord refresh={ShowData} record={record} />
               </tr>
             ))
           : records.map((record: Record, index: number) => (
@@ -126,7 +132,7 @@ const RaportsComponents: React.FC<DataTableProps> = ({ refreshData }) => {
                 key={index}
                 className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
               >
-                <SingleRecord record={record} />
+                <SingleRecord refresh={ShowData} record={record} />
               </tr>
             ))}
       </div>

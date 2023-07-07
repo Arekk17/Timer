@@ -5,15 +5,18 @@ import { Dialog, Transition } from '@headlessui/react'
 interface DeletePopupProps {
   record: any;
   onConfirmation: (confirmed: boolean) => void;
+  refresh: Function;
 }
 
 const DeletePopup: React.FC<DeletePopupProps> = ({
   record,
   onConfirmation,
+  refresh
 }) => {
   const [open, setOpen] = useState(true)
 
   const handleDeleteClick = () => {
+    refreshFunction();
     deleteRecord(record);
     onConfirmation(true);
   };
@@ -22,7 +25,9 @@ const DeletePopup: React.FC<DeletePopupProps> = ({
     onConfirmation(false);
   };
 
-  
+  const refreshFunction = () =>{
+    refresh()
+  }
 
   return (
     <Transition.Root show={open} as={Fragment}>

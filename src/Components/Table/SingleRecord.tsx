@@ -6,9 +6,10 @@ import { UpdatePopup } from './UpdatePopup';
 
 interface SingleRecordProps {
   record: Record;
+  refresh: Function;  
 }
 
-const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
+const SingleRecord: React.FC<SingleRecordProps> = ({ record, refresh }) => {
   const time = (taskTime: number) => {
     const totalMinutes = Math.floor(taskTime / 60);
     const seconds = taskTime % 60;
@@ -64,6 +65,10 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
     setActiveUpdateProps(false);
   };
 
+  const refreshFunction = () =>{
+    refresh()
+  }
+
   return (
     <>
       <td className="px-6 py-4 whitespace-nowrap">{record.taskName}</td>
@@ -91,13 +96,14 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
       </td>
 
       {activeProps && (
-        <Props record={record} onConfirmation={handlePropsConfirmation} />
+        <Props refresh={refreshFunction} record={record} onConfirmation={handlePropsConfirmation} />
       )}
 
       {activeUpdateProps && (
         <UpdatePopup
           record={record}
-          onConfirmation={handleUpdateConfirmation}
+          onConfirmation={handleUpdateConfirmation}          
+          refresh={refreshFunction}
         />
       )}
     </>

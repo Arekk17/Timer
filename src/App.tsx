@@ -10,10 +10,11 @@ const App = () => {
     <Router>
       <div className="flex flex-col md:flex-row scroll-smooth">
         <Sidenav />
+
         <div className="flex-grow bg-gray-200 pb-10">
           <Routes>
-            {/* Dodaj swoje trasy tutaj */}            
-            <Route path="/" element={<Home />} ></Route>
+            {/* Dodaj swoje trasy tutaj */}
+            <Route path="/" element={<Home />}></Route>
             <Route path="/graph" element={<Diagram />} />
             <Route path="/raport" element={<Raports />} />
           </Routes>
