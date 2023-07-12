@@ -58,8 +58,8 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
   };
 
   const convertTimeToSeconds = (time: string) => {
-    const [hours, minutes, seconds] = time.split(':').map(Number);
-    return hours * 3600 + minutes * 60 + seconds;
+    const [hours, minutes] = time.split(':').map(Number);
+    return hours * 3600 + minutes * 60;
   };
 
  
@@ -143,7 +143,7 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
                         onChange={handleChange}
                         type="time"
                         placeholder={record.startTime}
-                        step="1"
+                        
                       />
                     </div>
 
@@ -156,7 +156,7 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
                         onChange={handleChange}
                         type="time"
                         placeholder={record.endTime}
-                        step="1"
+                     
                       />
                     </div>
 

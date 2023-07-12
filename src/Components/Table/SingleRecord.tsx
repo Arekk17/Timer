@@ -11,12 +11,10 @@ interface SingleRecordProps {
 
 const SingleRecord: React.FC<SingleRecordProps> = ({ record, refresh }) => {
   const time = (taskTime: number) => {
-    const totalMinutes = Math.floor(taskTime / 60);
-    const seconds = taskTime % 60;
+    const totalMinutes = Math.floor(taskTime / 60);  
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
-
-    return `${padNumber(hours)}:${padNumber(minutes)}:${padNumber(seconds)}`;
+    return `${padNumber(hours)}:${padNumber(minutes)}:00`;
   };
 
   const padNumber = (number: number) => {
