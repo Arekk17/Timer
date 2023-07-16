@@ -42,7 +42,7 @@ export async function deleteRecord(record: TaskData) {
     const myCollection = collection(db, 'tasks');
     const docRef = doc(myCollection, record.id);
     await deleteDoc(docRef);
-    console.log('Dokument deleted with ID:', record.id);
+    
   }
 }
 

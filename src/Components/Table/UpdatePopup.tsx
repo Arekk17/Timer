@@ -45,8 +45,7 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
     refreshFunction();
     const { startTime, endTime } = formData;
     const newTaskTime = calculateTaskTimeInSeconds(startTime, endTime);
-    const updatedFormData = { ...formData, taskTime: newTaskTime };
-    console.log(updatedFormData);
+    const updatedFormData = { ...formData, taskTime: newTaskTime };    
     updateRecord(updatedFormData);
     onConfirmation(true);
   };
