@@ -1,19 +1,19 @@
-import React, { useState, Fragment} from 'react';
+import React, { useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { updateRecord } from '../../api/crudServices';
 import { Record } from './DataTable';
-import { format } from 'date-fns'
+import { format } from 'date-fns';
 
 interface UpdatePopupProps {
   record: Record;
-  onConfirmation: (confirmed: boolean) => void; 
+  onConfirmation: (confirmed: boolean) => void;
   refresh: Function;
 }
 
 export const UpdatePopup: React.FC<UpdatePopupProps> = ({
   record,
-  onConfirmation,  
-  refresh
+  onConfirmation,
+  refresh,
 }) => {
   const [formData, setFormData] = useState({
     taskName: record.taskName,
@@ -25,7 +25,8 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
     id: record.id,
   });
 
-  const [dataDisplay, setDataDisplay] = useState('0')
+  const [dataDisplay, setDataDisplay] = useState('0');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -33,8 +34,11 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const date = format(new Date(e.target.value), 'yyyy-MM-dd');
-    setDataDisplay(date)
-    setFormData({ ...formData, [e.target.name]: (new Date(e.target.value)).toLocaleDateString() });    
+    setDataDisplay(date);
+    setFormData({
+      ...formData,
+      [e.target.name]: new Date(e.target.value).toLocaleDateString(),
+    });
   };
 
   const handleCancelClick = () => {
@@ -44,10 +48,15 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
   const handleUpdateClick = () => {
     refreshFunction();
     const { startTime, endTime } = formData;
-    const newTaskTime = calculateTaskTimeInSeconds(startTime, endTime);
-    const updatedFormData = { ...formData, taskTime: newTaskTime };    
-    updateRecord(updatedFormData);
-    onConfirmation(true);
+
+    if (startTime <= endTime) {
+      const newTaskTime = calculateTaskTimeInSeconds(startTime, endTime);
+      const updatedFormData = { ...formData, taskTime: newTaskTime };
+      updateRecord(updatedFormData);
+      onConfirmation(true);
+    } else {
+      setErrorMessage('Godzina rozpoczęcia jest późniejsza niż zakończenia');
+    }
   };
 
   const calculateTaskTimeInSeconds = (startTime: string, endTime: string) => {
@@ -61,13 +70,11 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
     return hours * 3600 + minutes * 60;
   };
 
- 
-
   const [open, setOpen] = useState(true);
 
-  const refreshFunction = () =>{
-    refresh()
-  }
+  const refreshFunction = () => {
+    refresh();
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -97,7 +104,6 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-
                   <div className="sm:flex sm:items-start">
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                       <Dialog.Title
@@ -142,7 +148,6 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
                         onChange={handleChange}
                         type="time"
                         placeholder={record.startTime}
-                        
                       />
                     </div>
 
@@ -155,7 +160,6 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
                         onChange={handleChange}
                         type="time"
                         placeholder={record.endTime}
-                     
                       />
                     </div>
 
@@ -188,6 +192,9 @@ export const UpdatePopup: React.FC<UpdatePopupProps> = ({
                     Cancel
                   </button>
                 </div>
+                {errorMessage && (
+                  <div className="text-red-500 py-2 px-4">{errorMessage}</div>
+                )}
               </Dialog.Panel>
             </Transition.Child>
           </div>
