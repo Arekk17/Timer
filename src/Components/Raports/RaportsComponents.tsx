@@ -48,7 +48,7 @@ const RaportsComponents: React.FC<DataTableProps> = ({ refreshData }) => {
 
   const handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const date = new Date(event.target.value);
-    setStartDate(date);
+    setStartDate(date);    
   };
 
   const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,6 +77,12 @@ const RaportsComponents: React.FC<DataTableProps> = ({ refreshData }) => {
         pdf.save('table.pdf');
       });
     }
+  };
+
+  const ShowData = () => {
+    getData().then((x) => {
+      setRecords(x);
+    });    
   };
 
   return (
@@ -118,7 +124,7 @@ const RaportsComponents: React.FC<DataTableProps> = ({ refreshData }) => {
                 key={index}
                 className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
               >
-                <SingleRecord record={record} />
+                <SingleRecord refresh={ShowData} record={record} />
               </tr>
             ))
           : records.map((record: Record, index: number) => (
@@ -126,7 +132,7 @@ const RaportsComponents: React.FC<DataTableProps> = ({ refreshData }) => {
                 key={index}
                 className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
               >
-                <SingleRecord record={record} />
+                <SingleRecord refresh={ShowData} record={record} />
               </tr>
             ))}
       </div>

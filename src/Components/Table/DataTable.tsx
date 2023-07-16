@@ -31,6 +31,13 @@ const DataTable: React.FC<DataTableProps> = ({ refreshData }) => {
     fetchData();
   }, [refreshData]);
 
+
+  const ShowData = () => {
+    getData().then((x) => {
+      setRecords(x);
+    });    
+  };
+
   const formatTime = (seconds: number) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -58,7 +65,7 @@ const DataTable: React.FC<DataTableProps> = ({ refreshData }) => {
                 key={index}
                 className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
               >
-                <SingleRecord record={record} />
+                <SingleRecord refresh={ShowData} record={record} />
               </tr>
             ))}
           </tbody>

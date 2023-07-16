@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Record } from './DataTable';
 import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/solid';
 import Props from './DeletePopup';
@@ -6,17 +6,30 @@ import { UpdatePopup } from './UpdatePopup';
 
 interface SingleRecordProps {
   record: Record;
+  refresh: Function;
 }
 
-const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
+const SingleRecord: React.FC<SingleRecordProps> = ({ record, refresh }) => {
   const time = (taskTime: number) => {
     const totalMinutes = Math.floor(taskTime / 60);
-    const seconds = taskTime % 60;
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
-
-    return `${padNumber(hours)}:${padNumber(minutes)}:${padNumber(seconds)}`;
+    return `${padNumber(hours)}:${padNumber(minutes)}:00`;
   };
+
+const [newStartTime, setNewStartTime] = useState('')
+const [newEndTime, setNewEndTime] = useState('')
+
+  const newTime = (recordTime: string, set: Function) => {
+    const timewithoutcolon = recordTime.split(":")  
+    set((`${timewithoutcolon[0]}:${timewithoutcolon[1]}:00`))       
+  }
+
+useEffect(() => {
+  newTime(record.startTime, setNewStartTime)  
+  newTime(record.endTime, setNewEndTime)
+}, [record])
+
 
   const padNumber = (number: number) => {
     return number.toString().padStart(2, '0');
@@ -46,7 +59,6 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
 
   const handlePropsConfirmation = (confirmed: boolean) => {
     if (confirmed) {
-      console.log('Record deleted:', record);
     }
     setActiveProps(false);
   };
@@ -59,9 +71,13 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
 
   const handleUpdateConfirmation = (confirmed: boolean) => {
     if (confirmed) {
-      console.log('Record updated', record);
+      
     }
     setActiveUpdateProps(false);
+  };
+
+  const refreshFunction = () => {
+    refresh();
   };
 
   return (
@@ -74,8 +90,8 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
       >
         {record.taskType}
       </td>
-      <td className="px-6 py-4 whitespace-nowrap">{record.startTime}</td>
-      <td className="px-6 py-4 whitespace-nowrap">{record.endTime}</td>
+      <td className="px-6 py-4 whitespace-nowrap">{newStartTime}</td>
+      <td className="px-6 py-4 whitespace-nowrap">{newEndTime}</td>
       <td className="px-6 py-4 whitespace-nowrap">{record.taskDate}</td>
       <td className="px-6 py-4 whitespace-nowrap cursor-pointer">
         <TrashIcon
@@ -89,17 +105,24 @@ const SingleRecord: React.FC<SingleRecordProps> = ({ record }) => {
           onClick={handleDisplayUpdateProps}
         />
       </td>
-
-      {activeProps && (
-        <Props record={record} onConfirmation={handlePropsConfirmation} />
-      )}
-
-      {activeUpdateProps && (
-        <UpdatePopup
-          record={record}
-          onConfirmation={handleUpdateConfirmation}
-        />
-      )}
+      <td>
+        {activeProps && (
+          <Props
+            refresh={refreshFunction}
+            record={record}
+            onConfirmation={handlePropsConfirmation}
+          />
+        )}
+      </td>
+      <td>
+        {activeUpdateProps && (
+          <UpdatePopup
+            record={record}
+            onConfirmation={handleUpdateConfirmation}
+            refresh={refreshFunction}
+          />
+        )}
+      </td>
     </>
   );
 };
